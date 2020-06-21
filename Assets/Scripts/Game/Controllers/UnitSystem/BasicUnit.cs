@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace testProjectTemplate
 {
-    public class BasicUnit : Unit
+    public class BasicUnit : Unit, IPoolObject
     {
         [SerializeField] private List<UnitState> statesList;
         private Dictionary<UnitStateEnum, UnitState> states;
@@ -23,6 +23,8 @@ namespace testProjectTemplate
         public void Init(UnitTypeEnum unitType, float size, float sizeDeath, float speed,
             Action<BasicUnit, UnitTypeEnum> currentPositions, Action recalculateWinner)
         {
+            states = new Dictionary<UnitStateEnum, UnitState>();
+ 
             UnitType = unitType;
             SizeDeath = sizeDeath;
 
@@ -88,6 +90,21 @@ namespace testProjectTemplate
             UnitType = typeUnit;
             Speed = currentSpeed;
             ChangeState(stateUnit, true);
+        }
+
+        public bool IsPooledObject { get; set; }
+
+        public void Deactivate()
+        {
+            states = new Dictionary<UnitStateEnum, UnitState>();
+
+            recalculateWinner = null;
+            currentPositions = null;
+        }
+
+        public void Activate(GameObject templatePrefab)
+        {
+
         }
     }
 }

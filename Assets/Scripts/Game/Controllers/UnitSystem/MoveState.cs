@@ -31,7 +31,7 @@ namespace testProjectTemplate
             if (!isStopped)
             {
                 Move();
-                unit.currentPositions(unit, unit.UnitType);
+                unit.currentPositions?.Invoke(unit, unit.UnitType);
             }
         }
 
