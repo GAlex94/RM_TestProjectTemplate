@@ -12,12 +12,11 @@ namespace testProjectTemplate
         public bool IsDebug => isDebug;
 
         [field: SerializeField] public StateGameEnum CurrentStateGame { get; private set; }
-
-       
+        [field: SerializeField] public float SpeedSimulate { get; set; }
 
         [field: SerializeField]  private MainSettingGame mainGameSetting;
 
-        public MainSettingGame MainGameSetting => mainGameSetting;
+        public GameConfig MainGameSetting => mainGameSetting.GameConfig;
 
         void Awake()
         {
@@ -34,8 +33,8 @@ namespace testProjectTemplate
             this.isDebug = isDebug;
             this.settingName = settingName;
             mainGameSetting = null;
+            SpeedSimulate = 1;
             SetStateGame(gameState);
-
             if (!Debug.isDebugBuild)
             {
                 SetStateGame(StateGameEnum.Menu);

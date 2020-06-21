@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bd17e408a8362d46a6f363769145446, type: 3}
+  m_Name: UnitsConfig
+  m_EditorClassIdentifier: 
+  infoUnits:
+  - NameEditor: "\u0421\u0438\u043D\u0438\u0439 \u044E\u043D\u0438\u0442"
+    unitPrefab: {fileID: 902915585068585304, guid: 0e6e1a53ade284a4c8f18b163d9de537,
+      type: 3}
+    unitType: 0
+    teamColor: {r: 0, g: 0, b: 1, a: 1}
+  - NameEditor: "\u041A\u0440\u0430\u0441\u043D\u044B\u0439 \u044E\u043D\u0438\u0442"
+    unitPrefab: {fileID: 349522991858680070, guid: 6b9b2eb0b4bc80249aa7723955228e3b,
+      type: 3}
+    unitType: 1
+    teamColor: {r: 1, g: 0, b: 0, a: 1}

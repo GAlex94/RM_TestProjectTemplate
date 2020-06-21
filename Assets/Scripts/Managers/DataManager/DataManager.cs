@@ -7,15 +7,12 @@ namespace testProjectTemplate
     {
         private string profileName;
         private bool clearProfileOnStart;
-        [SerializeField] private GameData data = new GameData();
         private bool dataDirty = false;
-
+        GameData data = new GameData();
         private DefaultProfile defaultProfile;
 
         private string FilePath => Path.Combine(Application.persistentDataPath, profileName + ".json");
-
-        public GameData GetCurrentData => data;
-
+        
         void Awake()
         {
             DontDestroyOnLoad(this.gameObject);
@@ -26,10 +23,6 @@ namespace testProjectTemplate
             if (clearProfileOnStart)
             {
                 Clear();
-            }
-            else
-            {
-                Load();
             }
         }
 
@@ -45,44 +38,74 @@ namespace testProjectTemplate
 
         public void Clear()
         {
-            data = defaultProfile != null ? defaultProfile.profileData : new GameData();
-
-            Save();
-
-            if (File.Exists(FilePath))
+            if (PlayerPrefs.HasKey("SaveBattle"))
             {
-                Load();
-            }
-            else
-            {
-#if UNITY_EDITOR
-                Debug.LogError("Profile not saved! Check file system!");
-#endif
-                data = new GameData();
+                PlayerPrefs.DeleteKey("SaveBattle");
             }
         }
 
 
         [ContextMenu("Save")]
-        public void Save()
+        private void SaveData()
         {
+            if (!BattleGame.IsAwake)
+            {
+                return;
+            }
+
+            data.BattleData.teamOne.Clear();
+            data.BattleData.teamTwo.Clear();
+
+
+            data.BattleData.settingGame = GameManager.Instance.MainGameSetting;
+
+            foreach (var unit in BattleGame.Instance.UnitController.TeamOne.units)
+            {
+               // data.BattleData.teamOne.Add(new SaveUnitInfo(unit.transform.position, unit.UnitType, unit.UnitState, unit.Target,unit.Speed, unit.Size));
+            }
+
+            foreach (var unit in BattleGame.Instance.UnitController.TeamTwo.units)
+            {
+               // data.BattleData.teamTwo.Add(new SaveUnitInfo(unit.transform.position, unit.UnitType, unit.UnitState, unit.Target, unit.Speed, unit.Size));
+            }
+            
+            PlayerPrefs.SetString("SaveBattle", JsonUtility.ToJson(data, false));
+
             File.WriteAllText(FilePath, JsonUtility.ToJson(data, false));
 
             //TODO: To change the save progress in PlayerPrefs, and not on disk
             Debug.LogWarning("To change the save progress in PlayerPrefs, and not on disk");
         }
 
-        private void Load()
+        public bool IsCanLoadData()
         {
+            return PlayerPrefs.HasKey("SaveBattle");
+        }
+
+        private void LoadData()
+        {
+
+            if (!PlayerPrefs.HasKey("SaveBattle"))
+            {
+                return;
+            }
+            data = JsonUtility.FromJson<GameData>(PlayerPrefs.GetString("SaveBattle"));
+
             if (File.Exists(FilePath))
             {
                 data = JsonUtility.FromJson<GameData>(File.ReadAllText(FilePath));
+            }
+        }
 
-                UpdateRuntimeByLoadedData();
+        public void Save(bool isSaveDirty = true)
+        {
+            if (isSaveDirty)
+            {
+                SetDataDirty();
             }
             else
             {
-                Clear();
+                SaveData();
             }
         }
 
@@ -97,12 +120,8 @@ namespace testProjectTemplate
 
         private void DefferSave()
         {
-            Save();
+            SaveData();
             dataDirty = false;
-        }
-
-        private void UpdateRuntimeByLoadedData()
-        {
         }
     }
 }
