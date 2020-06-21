@@ -54,6 +54,11 @@ namespace testProjectTemplate
 
         public void RecalculateWinner()
         {
+            if (GameManager.Instance.CurrentStateGame != StateGameEnum.Game)
+            {
+                return;
+            }
+
             var sumUnits = teamOne.units.Count + teamTwo.units.Count;
             winOne = (float) teamOne.units.Count / sumUnits;
             winTwo = (float) teamTwo.units.Count / sumUnits;
@@ -115,6 +120,19 @@ namespace testProjectTemplate
         public void RemoveScoreListener(IScoreWinnerListener listener)
         {
             scoreListeners.Remove(listener);
+        }
+
+        public void ClearGame()
+        {
+            foreach (var curUnit in teamOne.units)
+            {
+                BattleGame.Instance.ObjectsPoolController.DestroyFromPool(curUnit.gameObject);
+            }
+
+            foreach (var curUnit in teamTwo.units)
+            {
+                BattleGame.Instance.ObjectsPoolController.DestroyFromPool(curUnit.gameObject);
+            }
         }
     }
 

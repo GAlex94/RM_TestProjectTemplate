@@ -53,6 +53,8 @@ namespace testProjectTemplate
         private void NewGame()
         {
             GameManager.Instance.SetStateGame(StateGameEnum.Pause);
+            BattleGame.Instance.UnitController.ClearGame();
+            GameManager.Instance.StartGame(StateGameEnum.Game);
         }
     }
 }

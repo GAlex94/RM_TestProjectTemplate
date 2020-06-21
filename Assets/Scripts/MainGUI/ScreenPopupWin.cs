@@ -23,7 +23,10 @@ namespace testProjectTemplate
 
         private void Restart()
         {
-            throw new System.NotImplementedException();
+            GameManager.Instance.SetStateGame(StateGameEnum.Pause);
+            BattleGame.Instance.UnitController.ClearGame();
+            GUIController.Instance.HideAll();
+            GameManager.Instance.StartGame(StateGameEnum.Game);
         }
 
       
