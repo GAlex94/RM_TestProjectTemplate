@@ -32,6 +32,7 @@ namespace testProjectTemplate
             base.OnShow();
             speedSlider.value = 1;
             GameManager.Instance.SpeedSimulate = 1;
+            loadButton.interactable = DataManager.Instance.IsCanLoadData();
         }
 
         private void SetSpeed(float value)
@@ -42,18 +43,23 @@ namespace testProjectTemplate
         private void LoadGame()
         {
             GameManager.Instance.SetStateGame(StateGameEnum.Pause);
-            throw new System.NotImplementedException();
+            BattleGame.Instance.UnitController.ClearGame();
+            DataManager.Instance.LoadData();
+            GameManager.Instance.StartGame(StateGameEnum.Game);
         }
 
         private void SaveGame()
         {
-            DataManager.Instance.Save(true);
+            DataManager.Instance.Save(false);
+            loadButton.interactable = DataManager.Instance.IsCanLoadData();
         }
 
         private void NewGame()
         {
             GameManager.Instance.SetStateGame(StateGameEnum.Pause);
             BattleGame.Instance.UnitController.ClearGame();
+            GameManager.Instance.TimeSimulate = 0;
+            GameManager.Instance.SetCurrentSetting(GameManager.Instance.MainSetting);
             GameManager.Instance.StartGame(StateGameEnum.Game);
         }
     }

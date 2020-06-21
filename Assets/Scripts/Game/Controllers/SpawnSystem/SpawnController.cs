@@ -22,7 +22,7 @@ namespace testProjectTemplate
             var bounds = BattleGame.Instance.GameAreaController.AreaRenderer;
             var min = bounds.bounds.min;
             var max = bounds.bounds.max;
-            var sizeUnit = GameManager.Instance.MainGameSetting.unitSpawnMaxRadius;
+            var sizeUnit = GameManager.Instance.CurrentGameSetting.unitSpawnMaxRadius;
             min.x += sizeUnit / 2;
             min.y += sizeUnit / 2;
             max.x -= sizeUnit / 2;

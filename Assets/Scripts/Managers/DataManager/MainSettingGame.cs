@@ -34,5 +34,18 @@ namespace testProjectTemplate
             unitSpawnMaxSpeed = 0;
             unitDestroyRadius = 0;
         }
+
+        public GameConfig(int gameAreaWidth, int gameAreaHeight, int numUnitsToSpawn, float unitSpawnDelay, float unitSpawnMinRadius, float unitSpawnMaxRadius, float unitSpawnMinSpeed, float unitSpawnMaxSpeed, float unitDestroyRadius)
+        {
+            this.gameAreaWidth = gameAreaWidth;
+            this.gameAreaHeight = gameAreaHeight;
+            this.numUnitsToSpawn = numUnitsToSpawn;
+            this.unitSpawnDelay = unitSpawnDelay;
+            this.unitSpawnMinRadius = unitSpawnMinRadius;
+            this.unitSpawnMaxRadius = unitSpawnMaxRadius;
+            this.unitSpawnMinSpeed = unitSpawnMinSpeed;
+            this.unitSpawnMaxSpeed = unitSpawnMaxSpeed;
+            this.unitDestroyRadius = unitDestroyRadius;
+        }
     }
 }

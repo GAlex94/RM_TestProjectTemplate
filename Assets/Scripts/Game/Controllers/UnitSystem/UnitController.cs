@@ -39,7 +39,7 @@ namespace testProjectTemplate
 
         public void AddUnitInTeam(BasicUnit unit, UnitTypeEnum typeTeam)
         {
-            var setting = GameManager.Instance.MainGameSetting;
+            var setting = GameManager.Instance.CurrentGameSetting;
             if (teamOne.teamType == typeTeam)
             {
                 unit.Init(typeTeam, UnityEngine.Random.Range(setting.unitSpawnMinRadius, setting.unitSpawnMaxRadius), setting.unitDestroyRadius, UnityEngine.Random.Range(setting.unitSpawnMinSpeed, setting.unitSpawnMaxSpeed), CheckCollision, RecalculateWinner);
@@ -59,9 +59,21 @@ namespace testProjectTemplate
                 return;
             }
 
-            var sumUnits = teamOne.units.Count + teamTwo.units.Count;
-            winOne = (float) teamOne.units.Count / sumUnits;
-            winTwo = (float) teamTwo.units.Count / sumUnits;
+            var sumTeamOne = 0f;
+            foreach (var curUnit in teamOne.units)
+            {
+                sumTeamOne = curUnit.Size;
+            }
+
+            var sumTeamTwo = 0f;
+            foreach (var curUnit in teamTwo.units)
+            {
+                sumTeamTwo = curUnit.Size;
+            }
+
+            var sumUnits = sumTeamOne + sumTeamTwo;
+            winOne = (float)sumTeamOne / sumUnits;
+            winTwo = (float)sumTeamTwo / sumUnits;
 
             if (teamOne.units.Count == 0)
             {

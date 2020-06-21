@@ -36,6 +36,7 @@ namespace testProjectTemplate
             if (isDamage)
             {
                 RecalculateScale();
+                unit.recalculateWinner?.Invoke();
             }
         }
 

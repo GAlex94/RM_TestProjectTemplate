@@ -18,7 +18,6 @@ namespace testProjectTemplate
         private void Death()
         {
             BattleGame.Instance.UnitController.DeleteUnit(unit);
-            unit.recalculateWinner?.Invoke();
             setNewState(UnitStateEnum.Idle, false);
         }
     }

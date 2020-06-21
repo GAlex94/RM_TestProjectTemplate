@@ -52,29 +52,31 @@ namespace testProjectTemplate
             {
                 return;
             }
-
+            data = new GameData();
             data.BattleData.teamOne.Clear();
             data.BattleData.teamTwo.Clear();
 
 
-            data.BattleData.settingGame = GameManager.Instance.MainGameSetting;
+            data.BattleData.settingGame = GameManager.Instance.CurrentGameSetting;
 
             foreach (var unit in BattleGame.Instance.UnitController.TeamOne.units)
             {
-               // data.BattleData.teamOne.Add(new SaveUnitInfo(unit.transform.position, unit.UnitType, unit.UnitState, unit.Target,unit.Speed, unit.Size));
+                data.BattleData.teamOne.Add(new SaveUnitInfo(unit.transform.position, unit.UnitType, unit.UnitState.StateType ,unit.Target, unit.Speed, unit.Size));
             }
 
             foreach (var unit in BattleGame.Instance.UnitController.TeamTwo.units)
             {
-               // data.BattleData.teamTwo.Add(new SaveUnitInfo(unit.transform.position, unit.UnitType, unit.UnitState, unit.Target, unit.Speed, unit.Size));
+               data.BattleData.teamTwo.Add(new SaveUnitInfo(unit.transform.position, unit.UnitType, unit.UnitState.StateType, unit.Target, unit.Speed, unit.Size));
             }
-            
+
+            data.BattleData.timeSimulate = BattleGame.Instance.TimeSimulate;
+
             PlayerPrefs.SetString("SaveBattle", JsonUtility.ToJson(data, false));
 
             File.WriteAllText(FilePath, JsonUtility.ToJson(data, false));
 
             //TODO: To change the save progress in PlayerPrefs, and not on disk
-            Debug.LogWarning("To change the save progress in PlayerPrefs, and not on disk");
+            Debug.LogError("To change the save progress in PlayerPrefs, and not on disk");
         }
 
         public bool IsCanLoadData()
@@ -82,7 +84,7 @@ namespace testProjectTemplate
             return PlayerPrefs.HasKey("SaveBattle");
         }
 
-        private void LoadData()
+        public void LoadData()
         {
 
             if (!PlayerPrefs.HasKey("SaveBattle"))
@@ -90,6 +92,8 @@ namespace testProjectTemplate
                 return;
             }
             data = JsonUtility.FromJson<GameData>(PlayerPrefs.GetString("SaveBattle"));
+            GameManager.Instance.SetCurrentSetting(data.BattleData.settingGame);
+            GameManager.Instance.TimeSimulate = data.BattleData.timeSimulate;
 
             if (File.Exists(FilePath))
             {

@@ -19,14 +19,14 @@ namespace testProjectTemplate
         public SpawnController SpawnController => spawnController;
         public UnitController UnitController => unitController;
 
-        private float timeSimulate;
+        public float TimeSimulate { get; set; }
 
         public void StartGame()
         {
-            gameAreaController.Init(GameManager.Instance.MainGameSetting.gameAreaWidth, GameManager.Instance.MainGameSetting.gameAreaHeight);
-            unitController.Init(unitsConfig, GameManager.Instance.MainGameSetting);
+            gameAreaController.Init(GameManager.Instance.CurrentGameSetting.gameAreaWidth, GameManager.Instance.CurrentGameSetting.gameAreaHeight);
+            unitController.Init(unitsConfig, GameManager.Instance.CurrentGameSetting);
             spawnController.Init();
-
+            TimeSimulate = GameManager.Instance.TimeSimulate;
 
             GUIController.Instance.ShowScreen<ScreenGame>();
             var screenTopBar = GUIController.Instance.FoundScreen<ScreenTopBar>();
@@ -38,7 +38,7 @@ namespace testProjectTemplate
         {
             GameManager.Instance.SetStateGame(StateGameEnum.Pause);
             var screenWin = GUIController.Instance.FoundScreen<ScreenPopupWin>();
-            screenWin.Init(teamWin.ToString(), timeSimulate);
+            screenWin.Init(teamWin.ToString(), TimeSimulate);
             GUIController.Instance.ShowScreen(screenWin);
         }
 
@@ -54,7 +54,7 @@ namespace testProjectTemplate
         {
             if (GameManager.Instance.CurrentStateGame == StateGameEnum.Game)
             {
-                timeSimulate += Time.deltaTime;
+                TimeSimulate += Time.deltaTime;
             }
         }
     }

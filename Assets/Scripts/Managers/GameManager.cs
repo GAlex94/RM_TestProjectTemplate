@@ -15,8 +15,10 @@ namespace testProjectTemplate
         [field: SerializeField] public float SpeedSimulate { get; set; }
 
         [field: SerializeField]  private MainSettingGame mainGameSetting;
-
-        public GameConfig MainGameSetting => mainGameSetting.GameConfig;
+        [field: SerializeField]  private GameConfig currentGameSetting;
+        public GameConfig CurrentGameSetting => currentGameSetting;
+        public GameConfig MainSetting => mainGameSetting.GameConfig ;
+        public float TimeSimulate { get; set; }
 
         void Awake()
         {
@@ -33,6 +35,7 @@ namespace testProjectTemplate
             this.isDebug = isDebug;
             this.settingName = settingName;
             mainGameSetting = null;
+            currentGameSetting = null;
             SpeedSimulate = 1;
             SetStateGame(gameState);
             if (!Debug.isDebugBuild)
@@ -105,6 +108,17 @@ namespace testProjectTemplate
                 yield return www;
                 mainGameSetting = JsonUtility.FromJson<MainSettingGame>(www.text);
             }
+
+            SetCurrentSetting(mainGameSetting.GameConfig);
+        }
+
+        public void SetCurrentSetting(GameConfig setting)
+        {
+            currentGameSetting = new GameConfig(mainGameSetting.GameConfig.gameAreaWidth,
+             setting.gameAreaHeight, mainGameSetting.GameConfig.numUnitsToSpawn,
+             setting.unitSpawnDelay, mainGameSetting.GameConfig.unitSpawnMinRadius,
+             setting.unitSpawnMaxRadius, mainGameSetting.GameConfig.unitSpawnMinSpeed,
+             setting.unitSpawnMaxSpeed, mainGameSetting.GameConfig.unitDestroyRadius);
         }
     }
 

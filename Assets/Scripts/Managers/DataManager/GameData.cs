@@ -13,6 +13,7 @@ namespace testProjectTemplate
         public GameData()
         {
             Version = "1.0";
+            BattleData = new BattleData();
         }
     }
 
@@ -20,8 +21,17 @@ namespace testProjectTemplate
     public class BattleData
     {
         public GameConfig settingGame;
+        public float timeSimulate;
         public List<SaveUnitInfo> teamOne;
         public List<SaveUnitInfo> teamTwo;
+
+        public BattleData()
+        {
+            this.settingGame = new GameConfig();
+            this.timeSimulate = 0;
+            this.teamOne = new List<SaveUnitInfo>();
+            this.teamTwo = new List<SaveUnitInfo>();
+        }
     }
 
 
