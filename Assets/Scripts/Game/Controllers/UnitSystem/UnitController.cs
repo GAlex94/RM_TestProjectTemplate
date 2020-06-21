@@ -13,6 +13,7 @@ namespace testProjectTemplate
         private float winOne;
         private float winTwo;
 
+        private List<IScoreWinnerListener> scoreListeners = new List<IScoreWinnerListener>();
         public TeamUnit TeamOne => teamOne;
 
         public TeamUnit TeamTwo => teamTwo;
@@ -66,6 +67,7 @@ namespace testProjectTemplate
             {
                 BattleGame.Instance.Win(teamOne.teamType);
             }
+            scoreListeners.ForEach(curListener => curListener.OnScoreChange(winOne, winTwo));
 
         }
         private void CheckCollision(BasicUnit unit, UnitTypeEnum unitType)
@@ -102,6 +104,17 @@ namespace testProjectTemplate
             var teamUnit = teamOne.teamType == basicUnit.UnitType ? teamOne : teamTwo;
             teamUnit.units.Remove(basicUnit);
             BattleGame.Instance.ObjectsPoolController.DestroyFromPool(basicUnit.gameObject);
+        }
+
+        public void AddScoreListener(IScoreWinnerListener listener)
+        {
+            if (!scoreListeners.Contains(listener))
+                scoreListeners.Add(listener);
+        }
+
+        public void RemoveScoreListener(IScoreWinnerListener listener)
+        {
+            scoreListeners.Remove(listener);
         }
     }
 

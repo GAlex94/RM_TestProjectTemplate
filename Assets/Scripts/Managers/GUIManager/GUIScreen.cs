@@ -18,7 +18,6 @@ namespace testProjectTemplate
 
         [SerializeField] private EffectType fadeEffect = EffectType.None;
         [SerializeField] protected RectTransform panelScreenTransform = null;
-        [SerializeField] protected CanvasGroup canvasGroup;
 
         private bool showed = false;
 
