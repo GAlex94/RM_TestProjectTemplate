@@ -146,6 +146,43 @@ namespace testProjectTemplate
                 BattleGame.Instance.ObjectsPoolController.DestroyFromPool(curUnit.gameObject);
             }
         }
+
+        public void LoadData()
+        {
+            var dataTeamOne = DataManager.Instance.CurrentData.BattleData.teamOne;
+            var dataTeamTwo = DataManager.Instance.CurrentData.BattleData.teamTwo;
+            for (var i = 0; i < teamOne.units.Count; i++)
+            {
+                if (i < dataTeamOne.Count)
+                {
+                    teamOne.units[i].ReInit(dataTeamOne[i].position, dataTeamOne[i].currentSize,
+                        dataTeamOne[i].currentSpeed, dataTeamOne[i].targetVector, dataTeamOne[i].typeUnit,
+                        dataTeamOne[i].stateUnit);
+                }
+                else
+                {
+                    BattleGame.Instance.ObjectsPoolController.DestroyFromPool(teamOne.units[i].gameObject);
+                    teamOne.units.RemoveAt(i);
+                }
+            }
+
+            for (var i = 0; i < teamTwo.units.Count; i++)
+            {
+                if (i < dataTeamTwo.Count)
+                {
+                    teamTwo.units[i].ReInit(dataTeamTwo[i].position, dataTeamTwo[i].currentSize,
+                        dataTeamTwo[i].currentSpeed, dataTeamTwo[i].targetVector, dataTeamTwo[i].typeUnit,
+                        dataTeamTwo[i].stateUnit);
+                }
+                else
+                {
+                    BattleGame.Instance.ObjectsPoolController.DestroyFromPool(teamTwo.units[i].gameObject);
+                    teamTwo.units.RemoveAt(i);
+                }
+            }
+            GameManager.Instance.SetStateGame(StateGameEnum.Game);
+            RecalculateWinner();
+        }
     }
 
 

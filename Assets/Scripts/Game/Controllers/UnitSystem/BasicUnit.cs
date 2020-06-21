@@ -80,13 +80,14 @@ namespace testProjectTemplate
             }
         }
         
-        public UnitStateEnum testState;
-        [ContextMenu("test")]
-        public void Test()
+        public void ReInit(Vector3 position, float currentSize, float currentSpeed, Vector3 targetVector, UnitTypeEnum typeUnit, UnitStateEnum stateUnit)
         {
-            ChangeState(testState);
+            transform.position = position;
+            transform.localScale = new Vector3(currentSize, currentSize, 1);
+            Target = targetVector;
+            UnitType = typeUnit;
+            Speed = currentSpeed;
+            ChangeState(stateUnit, true);
         }
-
-
     }
 }

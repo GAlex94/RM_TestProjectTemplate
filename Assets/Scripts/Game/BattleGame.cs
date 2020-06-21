@@ -6,10 +6,11 @@ namespace testProjectTemplate
     public class BattleGame : Singleton<BattleGame>, IGame
     {
         [Header("Конфиги")]
-       [SerializeField] private UnitsConfig unitsConfig;
+        [SerializeField] private UnitsConfig unitsConfig;
 
-        [Header("Контроллеры")]
+        [Header("Контроллеры")] 
         [SerializeField] private GameAreaController gameAreaController;
+
         [SerializeField] private SpawnController spawnController;
         [SerializeField] private ObjectsPoolController objectsPoolController;
         [SerializeField] private UnitController unitController;
@@ -23,9 +24,9 @@ namespace testProjectTemplate
 
         public void StartGame()
         {
-            gameAreaController.Init(GameManager.Instance.CurrentGameSetting.gameAreaWidth, GameManager.Instance.CurrentGameSetting.gameAreaHeight);
-            unitController.Init(unitsConfig, GameManager.Instance.CurrentGameSetting);
+            gameAreaController.Init(GameManager.Instance.CurrentGameSetting.gameAreaWidth,GameManager.Instance.CurrentGameSetting.gameAreaHeight);
             spawnController.Init();
+            unitController.Init(unitsConfig, GameManager.Instance.CurrentGameSetting);
             TimeSimulate = GameManager.Instance.TimeSimulate;
 
             GUIController.Instance.ShowScreen<ScreenGame>();
@@ -44,10 +45,18 @@ namespace testProjectTemplate
 
         public void StartSimulate()
         {
-            unitController.RecalculateWinner();
-            unitController.TeamOne.units.ForEach(u=>u.ChangeState(UnitStateEnum.RecalculateDirect));
-            unitController.TeamTwo.units.ForEach(u=>u.ChangeState(UnitStateEnum.RecalculateDirect));
-            
+            if (GameManager.Instance.IsLoadGame)
+            {
+                GameManager.Instance.SetStateGame(StateGameEnum.Pause);
+                unitController.LoadData();
+            }
+            else
+            {
+                unitController.RecalculateWinner();
+                unitController.TeamOne.units.ForEach(u => u.ChangeState(UnitStateEnum.RecalculateDirect));
+                unitController.TeamTwo.units.ForEach(u => u.ChangeState(UnitStateEnum.RecalculateDirect));
+            }
+
         }
 
         private void Update()

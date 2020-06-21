@@ -16,7 +16,8 @@ namespace testProjectTemplate
 
         private void StartGame()
         {
-            GameManager.Instance.TimeSimulate = 0;
+            GameManager.Instance.TimeSimulate = 0; 
+            GameManager.Instance.IsLoadGame = false;
             GameManager.Instance.StartGame(StateGameEnum.Game);
             GUIController.Instance.HideScreen(this);
         }

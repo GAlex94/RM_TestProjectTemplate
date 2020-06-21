@@ -27,6 +27,7 @@ namespace testProjectTemplate
             BattleGame.Instance.UnitController.ClearGame();
             GUIController.Instance.HideAll();
             GameManager.Instance.TimeSimulate = 0;
+            GameManager.Instance.IsLoadGame = false;
             GameManager.Instance.SetCurrentSetting(GameManager.Instance.MainSetting);
             GameManager.Instance.StartGame(StateGameEnum.Game);
         }

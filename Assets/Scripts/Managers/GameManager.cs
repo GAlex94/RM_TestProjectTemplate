@@ -19,6 +19,7 @@ namespace testProjectTemplate
         public GameConfig CurrentGameSetting => currentGameSetting;
         public GameConfig MainSetting => mainGameSetting.GameConfig ;
         public float TimeSimulate { get; set; }
+        public bool IsLoadGame { get; set; }
 
         void Awake()
         {

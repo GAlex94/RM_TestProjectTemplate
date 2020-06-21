@@ -45,6 +45,7 @@ namespace testProjectTemplate
             GameManager.Instance.SetStateGame(StateGameEnum.Pause);
             BattleGame.Instance.UnitController.ClearGame();
             DataManager.Instance.LoadData();
+            GameManager.Instance.IsLoadGame = true;
             GameManager.Instance.StartGame(StateGameEnum.Game);
         }
 
@@ -59,6 +60,7 @@ namespace testProjectTemplate
             GameManager.Instance.SetStateGame(StateGameEnum.Pause);
             BattleGame.Instance.UnitController.ClearGame();
             GameManager.Instance.TimeSimulate = 0;
+            GameManager.Instance.IsLoadGame = false;
             GameManager.Instance.SetCurrentSetting(GameManager.Instance.MainSetting);
             GameManager.Instance.StartGame(StateGameEnum.Game);
         }

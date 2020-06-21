@@ -61,6 +61,22 @@ namespace testProjectTemplate
         {
             yield return null;
             yield return new WaitUntil(()=> BattleGame.Instance.GameAreaController.IsSetSize);
+          
+            if (GameManager.Instance.IsLoadGame)
+            {
+                GameManager.Instance.SetStateGame(StateGameEnum.Pause);
+                for (int i = 0; i < countUnit * 2; i++)
+                {
+                    var currentInfo = i % 2 == 0 ? unitOne : unitTwo;
+                    var unit = BattleGame.Instance.ObjectsPoolController.InstantiateFromPool(currentInfo.unitPrefab.gameObject, Vector3.zero, Quaternion.identity, i % 2 == 0 ? PoolType.UnitsOne : PoolType.UnitsTwo).GetComponent<BasicUnit>();
+                    spawnUnitAction?.Invoke(unit.GetComponent<BasicUnit>(), currentInfo.unitType);
+                }
+
+                endSpawnAction?.Invoke();
+                yield break;
+            }
+
+
             for (int i = 0; i < countUnit * 2; i++)
             {
                 var currentInfo = i % 2 == 0 ? unitOne : unitTwo;

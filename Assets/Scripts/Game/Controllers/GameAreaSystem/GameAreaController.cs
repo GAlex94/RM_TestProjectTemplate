@@ -19,8 +19,7 @@ namespace testProjectTemplate
 
             if (areaWidth > areaHeight * Camera.main.aspect)
             {
-                Camera.main.orthographicSize =
-                    (float)areaWidth * Camera.main.pixelHeight / Camera.main.pixelWidth * .5f;
+                Camera.main.orthographicSize = (float)areaWidth * Camera.main.pixelHeight / Camera.main.pixelWidth * .5f;
             }
             else
             {

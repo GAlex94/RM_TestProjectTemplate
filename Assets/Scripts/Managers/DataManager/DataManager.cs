@@ -11,8 +11,8 @@ namespace testProjectTemplate
         GameData data = new GameData();
         private DefaultProfile defaultProfile;
 
-        private string FilePath => Path.Combine(Application.persistentDataPath, profileName + ".json");
-        
+        public GameData CurrentData => data;
+
         void Awake()
         {
             DontDestroyOnLoad(this.gameObject);
@@ -72,11 +72,6 @@ namespace testProjectTemplate
             data.BattleData.timeSimulate = BattleGame.Instance.TimeSimulate;
 
             PlayerPrefs.SetString("SaveBattle", JsonUtility.ToJson(data, false));
-
-            File.WriteAllText(FilePath, JsonUtility.ToJson(data, false));
-
-            //TODO: To change the save progress in PlayerPrefs, and not on disk
-            Debug.LogError("To change the save progress in PlayerPrefs, and not on disk");
         }
 
         public bool IsCanLoadData()
@@ -94,11 +89,6 @@ namespace testProjectTemplate
             data = JsonUtility.FromJson<GameData>(PlayerPrefs.GetString("SaveBattle"));
             GameManager.Instance.SetCurrentSetting(data.BattleData.settingGame);
             GameManager.Instance.TimeSimulate = data.BattleData.timeSimulate;
-
-            if (File.Exists(FilePath))
-            {
-                data = JsonUtility.FromJson<GameData>(File.ReadAllText(FilePath));
-            }
         }
 
         public void Save(bool isSaveDirty = true)

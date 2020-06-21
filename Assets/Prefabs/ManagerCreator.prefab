@@ -44,7 +44,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDebug: 1
-  curStateGame: 2
+  curStateGame: 0
+  settingName: GameConfig
   profileName: MainProfile
   clearProfile: 0
-  defaultProfile: {fileID: 0}
+  defaultProfile: {fileID: 11400000, guid: 78870e918de30f4488c8831fb3dd1c96, type: 2}
