@@ -22,6 +22,21 @@ namespace testProjectTemplate
 
             loadButton.onClick.RemoveAllListeners();
             loadButton.onClick.AddListener(LoadGame);
+
+            speedSlider.onValueChanged.RemoveAllListeners();
+            speedSlider.onValueChanged.AddListener(SetSpeed);
+        }
+
+        protected override void OnShow()
+        {
+            base.OnShow();
+            speedSlider.value = 1;
+            GameManager.Instance.SpeedSimulate = 1;
+        }
+
+        private void SetSpeed(float value)
+        {
+            GameManager.Instance.SpeedSimulate = value;
         }
 
         private void LoadGame()
