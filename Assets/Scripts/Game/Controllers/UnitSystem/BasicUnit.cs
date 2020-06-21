@@ -42,10 +42,11 @@ namespace testProjectTemplate
 
         public void ChangeState(UnitStateEnum newState, bool force = false)
         {
-            if (IsDeath && !force)
+            if (IsDeath && !force || (currentState != null && newState == currentState.StateType))
             {
                 return;
             }
+
             var newSate = FoundState(newState);
 
             if (newSate == null) return;

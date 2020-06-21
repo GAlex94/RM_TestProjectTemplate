@@ -24,12 +24,18 @@ namespace testProjectTemplate
             gameAreaController.Init(GameManager.Instance.MainGameSetting.gameAreaWidth, GameManager.Instance.MainGameSetting.gameAreaHeight);
             unitController.Init(unitsConfig, GameManager.Instance.MainGameSetting);
             spawnController.Init();
-
         }
 
-        public void Win(UnitTypeEnum teamOneTeamType)
+        public void Win(UnitTypeEnum teamWin)
         {
             GameManager.Instance.SetStateGame(StateGameEnum.Pause);
+        }
+
+        public void StartSimulate()
+        {
+            unitController.RecalculateWinner();
+            unitController.TeamOne.units.ForEach(u=>u.ChangeState(UnitStateEnum.RecalculateDirect));
+            unitController.TeamTwo.units.ForEach(u=>u.ChangeState(UnitStateEnum.RecalculateDirect));
         }
     }
 

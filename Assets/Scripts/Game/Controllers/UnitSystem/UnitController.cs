@@ -27,7 +27,7 @@ namespace testProjectTemplate
         {
             teamOne = new TeamUnit(typeTeamOne, GetInfoUnit(typeTeamOne).teamColor);
             teamTwo = new TeamUnit(typeTeamTwo, GetInfoUnit(typeTeamTwo).teamColor);
-            BattleGame.Instance.SpawnController.SpawnUnits(settingGame.numUnitsToSpawn, settingGame.unitSpawnDelay, GetInfoUnit(typeTeamOne), GetInfoUnit(typeTeamTwo), AddUnitInTeam, RecalculateWinner);
+            BattleGame.Instance.SpawnController.SpawnUnits(settingGame.numUnitsToSpawn, settingGame.unitSpawnDelay, GetInfoUnit(typeTeamOne), GetInfoUnit(typeTeamTwo), AddUnitInTeam, BattleGame.Instance.StartSimulate);
             winOne = winTwo = 0.5f;
         }
 
@@ -51,7 +51,7 @@ namespace testProjectTemplate
             }
         }
 
-        private void RecalculateWinner()
+        public void RecalculateWinner()
         {
             var sumUnits = teamOne.units.Count + teamTwo.units.Count;
             winOne = (float) teamOne.units.Count / sumUnits;
