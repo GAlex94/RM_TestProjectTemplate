@@ -6,10 +6,18 @@ namespace testProjectTemplate
 {
     public class GameManager : Singleton<GameManager>
     {
+        private string settingName = "GameConfig";
+
         private bool isDebug = true;
         public bool IsDebug => isDebug;
 
         [field: SerializeField] public StateGameEnum CurrentStateGame { get; private set; }
+
+       
+
+        [field: SerializeField]  private MainSettingGame mainGameSetting;
+
+        public MainSettingGame MainGameSetting => mainGameSetting;
 
         void Awake()
         {
@@ -21,9 +29,11 @@ namespace testProjectTemplate
             StartCoroutine(DefferGameStart());
         }
 
-        public void Init(bool isDebug, StateGameEnum gameState)
+        public void Init(bool isDebug, string settingName, StateGameEnum gameState)
         {
             this.isDebug = isDebug;
+            this.settingName = settingName;
+            mainGameSetting = null;
             SetStateGame(gameState);
 
             if (!Debug.isDebugBuild)
@@ -53,6 +63,11 @@ namespace testProjectTemplate
 
         IEnumerator DefferGameStart()
         {
+            if (mainGameSetting == null)
+            {
+                StartCoroutine(LoadSetting());
+            }
+
             yield return new WaitForEndOfFrame();
 
             if (CurrentStateGame == StateGameEnum.Menu)
@@ -72,6 +87,24 @@ namespace testProjectTemplate
                 {
                     Debug.LogError("IGame object not found in scene! Game didn't launch..");
                 }
+            }
+        }
+
+        private IEnumerator LoadSetting()
+        {
+            string filePath = "";
+
+#if UNITY_ANDROID && !UNITY_EDITOR
+              filePath = "jar:file://" + Application.dataPath + "!/assets/" + settingName + ".json";
+#elif UNITY_IOS && !UNITY_EDITOR
+            filePath = Application.dataPath + "/Raw/" + settingName + ".json";
+#else
+            filePath = Application.dataPath + "/StreamingAssets/" + settingName + ".json";
+#endif
+            using (WWW www = new WWW(filePath))
+            {
+                yield return www;
+                mainGameSetting = JsonUtility.FromJson<MainSettingGame>(www.text);
             }
         }
     }

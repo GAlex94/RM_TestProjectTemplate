@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 828993d2aa2d3954ca74fc61797ae3da, type: 3}
+  m_Name: MainSettingForTest
+  m_EditorClassIdentifier: 
+  setting:
+    GameConfig:
+      gameAreaWidth: 200
+      gameAreaHeight: 100
+      numUnitsToSpawn: 100
+      unitSpawnDelay: 5
+      unitSpawnMinRadius: 0.5
+      unitSpawnMaxRadius: 1
+      unitSpawnMinSpeed: 5
+      unitSpawnMaxSpeed: 10
+      unitDestroyRadius: 10

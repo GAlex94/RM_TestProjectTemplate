@@ -8,6 +8,9 @@ namespace testProjectTemplate
         [SerializeField] private bool isDebug = true;
         [SerializeField] private StateGameEnum curStateGame = StateGameEnum.Menu;
      
+        [Header("Main Game Settings")]
+        [SerializeField] private string settingName = "GameConfig";
+
         [Header("Data managers settings")] 
         [SerializeField] private string profileName = "MainProfile";
         [SerializeField] private bool clearProfile = false;
@@ -18,7 +21,7 @@ namespace testProjectTemplate
             if (!GameManager.IsAwake)
             {
                 DataManager.Instance.Init(profileName, clearProfile, defaultProfile);
-                GameManager.Instance.Init(isDebug, curStateGame);
+                GameManager.Instance.Init(isDebug, settingName, curStateGame);
                
                 Screen.sleepTimeout = SleepTimeout.NeverSleep;
                 Application.targetFrameRate = 60;
