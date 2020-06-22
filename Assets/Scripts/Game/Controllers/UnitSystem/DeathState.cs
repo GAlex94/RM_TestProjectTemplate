@@ -17,6 +17,7 @@ namespace testProjectTemplate
 
         private void Death()
         {
+            transform.localScale = new Vector3(0, 0, 1);
             BattleGame.Instance.UnitController.DeleteUnit(unit);
             setNewState(UnitStateEnum.Idle, false);
         }

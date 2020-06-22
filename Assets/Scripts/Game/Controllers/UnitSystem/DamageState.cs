@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace testProjectTemplate
 {
@@ -15,6 +16,8 @@ namespace testProjectTemplate
         {
             base.OnStart();
             isDamage = true;
+            RecalculateScale();
+            unit.recalculateWinner?.Invoke();
         }
 
         protected override void OnFinish()
@@ -43,6 +46,7 @@ namespace testProjectTemplate
         private void RecalculateScale()
         {
             var scale = transform.localScale.x - speedLowScale * Time.deltaTime * GameManager.Instance.SpeedSimulate;
+            scale = Mathf.Clamp(scale, 0, Single.MaxValue);
             transform.localScale = new Vector3(scale, scale, 1);
         }
     }

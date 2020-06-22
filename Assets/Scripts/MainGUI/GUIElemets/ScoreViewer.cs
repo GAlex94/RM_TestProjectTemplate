@@ -14,7 +14,7 @@ namespace testProjectTemplate
         {
             teamOneImage.color = colorTeamOne;
             teamTwoImage.color = colorTeamTwo;
-            
+            OnScoreChange(0.5f, 0.5f);
             BattleGame.Instance.UnitController.AddScoreListener(this);
         }
 

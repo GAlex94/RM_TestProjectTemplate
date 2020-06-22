@@ -49,7 +49,7 @@ namespace testProjectTemplate
 
         public virtual void Move()
         {
-            if (IsMoveInside(transform.position + unit.Speed * unit.Target * Time.deltaTime))
+            if (IsMoveInside(transform.position + unit.Speed * unit.Target * Time.deltaTime * GameManager.Instance.SpeedSimulate))
             {
                 isStopped = true;
                 setNewState(UnitStateEnum.RecalculateDirect, false);

@@ -27,7 +27,7 @@ namespace testProjectTemplate
  
             UnitType = unitType;
             SizeDeath = sizeDeath;
-
+            size = Mathf.Clamp(size, 0, Single.MaxValue);
             transform.localScale = new Vector3(size, size, 1);
             this.recalculateWinner = recalculateWinner;
             this.currentPositions = currentPositions;
@@ -85,6 +85,7 @@ namespace testProjectTemplate
         public void ReInit(Vector3 position, float currentSize, float currentSpeed, Vector3 targetVector, UnitTypeEnum typeUnit, UnitStateEnum stateUnit)
         {
             transform.position = position;
+            currentSize = Mathf.Clamp(currentSize, 0, Single.MaxValue);
             transform.localScale = new Vector3(currentSize, currentSize, 1);
             Target = targetVector;
             UnitType = typeUnit;
@@ -100,11 +101,12 @@ namespace testProjectTemplate
 
             recalculateWinner = null;
             currentPositions = null;
+            IsDeath = false;
         }
 
         public void Activate(GameObject templatePrefab)
         {
-
+            IsDeath = false;
         }
     }
 }

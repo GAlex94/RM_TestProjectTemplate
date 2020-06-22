@@ -51,6 +51,10 @@ namespace testProjectTemplate
 
         private void SaveGame()
         {
+            if (GameManager.Instance.CurrentStateGame != StateGameEnum.Game)
+            {
+                return;
+            }
             DataManager.Instance.Save(false);
             loadButton.interactable = DataManager.Instance.IsCanLoadData();
         }

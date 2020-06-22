@@ -7,6 +7,9 @@ namespace testProjectTemplate
     {
         [SerializeField] private SpriteRenderer areaRenderer = null;
         [SerializeField] private float timeSetSizeArea = 1f;
+
+        private int pixelWidth;
+        private bool isInit = false;
         public bool IsSetSize { get; private set; }
 
         public SpriteRenderer AreaRenderer => areaRenderer;
@@ -16,15 +19,34 @@ namespace testProjectTemplate
             IsSetSize = false;
 
             AreaRenderer.gameObject.transform.DOScale(new Vector3(areaWidth, areaHeight), timeSetSizeArea).OnComplete((() => IsSetSize = true));
+            ChangeOrthographicSize();
+            pixelWidth = Camera.main.pixelWidth;
+            isInit = true;
+        }
 
-            if (areaWidth > areaHeight * Camera.main.aspect)
+        private void ChangeOrthographicSize()
+        {
+            if (GameManager.Instance.CurrentGameSetting.gameAreaWidth > GameManager.Instance.CurrentGameSetting.gameAreaHeight  * Camera.main.aspect)
             {
-                Camera.main.orthographicSize = (float)areaWidth * Camera.main.pixelHeight / Camera.main.pixelWidth * .5f;
+                Camera.main.orthographicSize = (float)GameManager.Instance.CurrentGameSetting.gameAreaWidth  * Camera.main.pixelHeight / Camera.main.pixelWidth * .5f;
             }
             else
             {
-                Camera.main.orthographicSize = areaHeight * .5f;
+                Camera.main.orthographicSize = GameManager.Instance.CurrentGameSetting.gameAreaHeight * .5f;
             }
         }
-    }
+
+        private void Update()
+        {
+            if (!isInit)
+            {
+                return;
+            }
+            if (pixelWidth != Camera.main.pixelWidth)
+            {
+                pixelWidth = Camera.main.pixelWidth;
+                ChangeOrthographicSize();
+            }
+        }
+    }    
 }

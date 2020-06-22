@@ -8,7 +8,7 @@ namespace testProjectTemplate
     public class SpawnController : MonoBehaviour
     {
         private List<Bounds> usedPosition;
-
+        private Coroutine spawnCoroutine;
         public void Init()
         {
             if (usedPosition == null)
@@ -54,7 +54,21 @@ namespace testProjectTemplate
 
         public void SpawnUnits(int countUnit, float delaySpawn, UnitInfo unitOne, UnitInfo unitTwo, Action<BasicUnit, UnitTypeEnum> spawnUnitAction, Action endSpawnAction = null)
         {
-            StartCoroutine(Spawn(countUnit, delaySpawn, unitOne, unitTwo, spawnUnitAction, endSpawnAction));
+            if (spawnCoroutine != null)
+            {
+                StopCoroutine(spawnCoroutine);
+            }
+            spawnCoroutine = StartCoroutine(Spawn(countUnit, delaySpawn, unitOne, unitTwo, spawnUnitAction, endSpawnAction));
+        }
+
+        public void StopSpawn()
+        {
+            if (spawnCoroutine != null)
+            {
+                StopCoroutine(spawnCoroutine);
+            }
+
+            spawnCoroutine = null;
         }
 
         private IEnumerator Spawn(int countUnit, float delaySpawn, UnitInfo unitOne, UnitInfo unitTwo, Action<BasicUnit, UnitTypeEnum> spawnUnitAction, Action endSpawnAction)
@@ -70,8 +84,8 @@ namespace testProjectTemplate
                     var currentInfo = i % 2 == 0 ? unitOne : unitTwo;
                     var unit = BattleGame.Instance.ObjectsPoolController.InstantiateFromPool(currentInfo.unitPrefab.gameObject, Vector3.zero, Quaternion.identity, i % 2 == 0 ? PoolType.UnitsOne : PoolType.UnitsTwo).GetComponent<BasicUnit>();
                     spawnUnitAction?.Invoke(unit.GetComponent<BasicUnit>(), currentInfo.unitType);
+                    unit.gameObject.SetActive(false);
                 }
-
                 endSpawnAction?.Invoke();
                 yield break;
             }

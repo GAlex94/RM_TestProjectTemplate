@@ -26,6 +26,7 @@ namespace testProjectTemplate
         {
             gameAreaController.Init(GameManager.Instance.CurrentGameSetting.gameAreaWidth,GameManager.Instance.CurrentGameSetting.gameAreaHeight);
             spawnController.Init();
+            spawnController.StopSpawn();
             unitController.Init(unitsConfig, GameManager.Instance.CurrentGameSetting);
             TimeSimulate = GameManager.Instance.TimeSimulate;
 
